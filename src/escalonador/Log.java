@@ -33,11 +33,11 @@ public class Log {
 		return String.format(IO_STARTED, testName);
 	}
 	
-	public static String averageExchangesMessage(int averageExchanges) {
+	public static String averageExchangesMessage(double averageExchanges) {
 		return String.format(AVERAGE_EXCHANGES, averageExchanges);
 	}
 	
-	public static String instructionAverageMessage(int instructionAverage) {
+	public static String instructionAverageMessage(double instructionAverage) {
 		return String.format(INSTRUCTION_AVERAGE, instructionAverage);
 	}
 	
