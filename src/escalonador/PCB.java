@@ -65,7 +65,7 @@ public class PCB implements Comparable<PCB>{
 	}
 	
 	public void setRegisterY(int y) {
-		this.registerX = y;
+		this.registerY = y;
 	}
 	
 	// Wait methods
