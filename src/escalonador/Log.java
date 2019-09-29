@@ -12,24 +12,24 @@ public class Log {
 		QUANTUM = "QUANTUM: %s";
 	
 	
-	public static String loadingProcessMessage(int testName) {
+	public static String loadingProcessMessage(String testName) {
 		return String.format(LOADING_PROCESS, testName);
 	}
 	
-	public static String runningProcessMessage(int testName) {
+	public static String runningProcessMessage(String testName) {
 		return String.format(RUNNING_PROCESS, testName);
 	}
 	
-	public static String endingProcessMessage(int testName, int registerX, int registerY) {
+	public static String endingProcessMessage(String testName, int registerX, int registerY) {
 		return String.format(ENDING_PROCESS, testName, registerX, registerY);
 	}
 	
-	public static String interruptingProcessMessage(int testName, int numberOfInstructions) {
+	public static String interruptingProcessMessage(String testName, int numberOfInstructions) {
 		String usedString = numberOfInstructions <= 1 ? INTERRUPTING_PROCESS_1 : INTERRUPTING_PROCESS_2;
 		return String.format(usedString, testName, numberOfInstructions);
 	}
 	
-	public static String IOMessage(int testName) {
+	public static String IOMessage(String testName) {
 		return String.format(IO_STARTED, testName);
 	}
 	
