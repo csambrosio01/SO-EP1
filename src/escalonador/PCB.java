@@ -1,3 +1,4 @@
+package escalonador;
 public class PCB implements Comparable<PCB>{
 	private Process process;
 	private int priority;

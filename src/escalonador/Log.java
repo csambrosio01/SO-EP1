@@ -1,3 +1,4 @@
+package escalonador;
 public class Log {
 	private static final String 
 		LOADING_PROCESS = "Carregando %s\n",

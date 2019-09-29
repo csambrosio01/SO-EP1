@@ -1,3 +1,4 @@
+package escalonador;
 public class Process {
 	static final char READY = 'r';   // the process is ready
 	static final char RUNNING = 'u'; // the process is running
