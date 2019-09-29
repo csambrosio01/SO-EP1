@@ -1,13 +1,13 @@
 public class Log {
 	private static final String 
-		LOADING_PROCESS = "Carregando %s",
-		RUNNING_PROCESS = "Executando %s",
-		ENDING_PROCESS = "%s terminado. X=%s. Y=%s",
-		INTERRUPTING_PROCESS_1 = "Interrompendo %s após %s instrução",
-		INTERRUPTING_PROCESS_2 = "Interrompendo %s após %s instruções",
-		IO_STARTED = "E/S iniciada em %s",
-		AVERAGE_EXCHANGES = "MEDIA DE TROCAS: %s",
-		INSTRUCTION_AVERAGE = "MEDIA DE INSTRUCOES: %s",
+		LOADING_PROCESS = "Carregando %s\n",
+		RUNNING_PROCESS = "Executando %s\n",
+		ENDING_PROCESS = "%s terminado. X=%s. Y=%s\n",
+		INTERRUPTING_PROCESS_1 = "Interrompendo %s após %s instrução\n",
+		INTERRUPTING_PROCESS_2 = "Interrompendo %s após %s instruções\n",
+		IO_STARTED = "E/S iniciada em %s\n",
+		AVERAGE_EXCHANGES = "MEDIA DE TROCAS: %s\n",
+		INSTRUCTION_AVERAGE = "MEDIA DE INSTRUCOES: %s\n",
 		QUANTUM = "QUANTUM: %s";
 	
 	
