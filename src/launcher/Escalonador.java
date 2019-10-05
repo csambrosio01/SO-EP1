@@ -49,6 +49,12 @@ public class Escalonador {
 	public static void main(String[] args) throws IOException {
 		readQuantum();
 		logger = Log.getInstance();
+
+		List<Integer> priorities = readPriorities();
+
+		readProcessFiles(priorities);
+
+		logger.closeLogFile();
 	}
 
 }
