@@ -18,7 +18,7 @@ public class ReadDatas {
         logger = Log.getInstance();
     }
 
-    public PCB readFile(int proccessNumber, int processPriority) throws Exception {
+    public PCB readFile(int proccessNumber, int processPriority) throws IOException {
         String processPath = "src/processos/" + (proccessNumber < 10 ? "0" + proccessNumber : proccessNumber) + ".txt";
         BufferedReader reader = new BufferedReader(new FileReader(processPath));
 
