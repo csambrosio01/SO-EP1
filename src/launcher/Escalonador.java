@@ -1,6 +1,7 @@
 package launcher;
 
 import ioDatas.Log;
+import ioDatas.ReadDatas;
 import scheduler.PCB;
 import scheduler.ProcessList;
 import scheduler.ProcessTable;
@@ -33,6 +34,16 @@ public class Escalonador {
 		}
 
 		return priorities;
+	}
+
+	private static void readProcessFiles(List<Integer> priorities) throws IOException {
+		ReadDatas readDatas = new ReadDatas();
+
+		for (int i = 1; i <= priorities.size(); i++) {
+			PCB processPCB = readDatas.readFile(i, priorities.get(i - 1));
+			ProcessTable.addPCBonProcessTable(processPCB);
+			ProcessList.addReadyProcess(processPCB);
+		}
 	}
 
 	public static void main(String[] args) throws IOException {
