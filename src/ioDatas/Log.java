@@ -32,13 +32,13 @@ public class Log {
 		return logInstance;
 	}
 	
-	public void addMessage(String message, Object... args) throws IOException {
+	public void addMessage(String message, Object... args) {
 		MessageFormat formatter = new MessageFormat("");
 		formatter.applyPattern(bundle.getString(message));
 		logFile.println(formatter.format(args));
 	}
 	
-	public void closeLogFile() throws IOException {
+	public void closeLogFile() {
 		logFile.close();
 	}
 }
