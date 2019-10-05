@@ -1,32 +1,32 @@
 package ioDatas;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.Scanner;
 
 public class Log {
 
-	private FileWriter logFile;
+	private PrintStream logFile;
 	private static Log logInstance;
 
 	private static final String 
-		LOADING_PROCESS = "Carregando %s\n",
-		RUNNING_PROCESS = "Executando %s\n",
-		ENDING_PROCESS = "%s terminado. X=%s. Y=%s\n",
-		INTERRUPTING_PROCESS_1 = "Interrompendo %s após %s instrução\n",
-		INTERRUPTING_PROCESS_2 = "Interrompendo %s após %s instruções\n",
-		IO_STARTED = "E/S iniciada em %s\n",
-		AVERAGE_EXCHANGES = "MEDIA DE TROCAS: %s\n",
-		INSTRUCTION_AVERAGE = "MEDIA DE INSTRUCOES: %s\n",
+		LOADING_PROCESS = "Carregando %s",
+		RUNNING_PROCESS = "Executando %s",
+		ENDING_PROCESS = "%s terminado. X=%s. Y=%s",
+		INTERRUPTING_PROCESS_1 = "Interrompendo %s após %s instrução",
+		INTERRUPTING_PROCESS_2 = "Interrompendo %s após %s instruções",
+		IO_STARTED = "E/S iniciada em %s",
+		AVERAGE_EXCHANGES = "MEDIA DE TROCAS: %s",
+		INSTRUCTION_AVERAGE = "MEDIA DE INSTRUCOES: %s",
 		QUANTUM = "QUANTUM: %s";
-	
+
 	private Log() throws IOException {
 		Scanner scanner = new Scanner(new File("src/processos/quantum.txt"));
 		int quantum = scanner.nextInt();
 
 		String filename = quantum < 10 ? ("log0" +quantum+ ".txt") : ("log" +quantum+ ".txt");
-		logFile = new FileWriter("src/processos/" +filename);
+		logFile = new PrintStream("src/processos/" +filename);
 	}
 	
 	public static Log getInstance () throws IOException {
@@ -36,7 +36,7 @@ public class Log {
 	}
 	
 	public void addMessage(String message) throws IOException {
-		logFile.write(message);
+		logFile.println(message);
 	}
 	
 	public void closeLogFile() throws IOException {
