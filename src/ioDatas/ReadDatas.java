@@ -4,11 +4,11 @@ import scheduler.PCB;
 import scheduler.Process;
 import scheduler.State;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class ReadDatas {
 
@@ -20,15 +20,15 @@ public class ReadDatas {
 
     public PCB readFile(int proccessNumber, int processPriority) throws IOException {
         String processPath = "src/processos/" + (proccessNumber < 10 ? "0" + proccessNumber : proccessNumber) + ".txt";
-        BufferedReader reader = new BufferedReader(new FileReader(processPath));
+        Scanner scanner = new Scanner(new File(processPath));
 
         List<String> instructions = new ArrayList<>();
 
-        String fileName = reader.readLine();
+        String fileName = scanner.nextLine();
         logger.addMessage("LOADING_PROCESS", fileName);
 
-        String content;
-        while ((content = reader.readLine()) != null) {
+        while (scanner.hasNextLine()) {
+            String content = scanner.nextLine();
             instructions.add(content);
         }
 
