@@ -17,27 +17,14 @@ public class Escalonador {
 	public static int quantum = 3; //Set default quantum as 3
 
 	private static Log logger;
+	private static ReadDatas readDatas;
 
 	private static void readQuantum() throws IOException {
 		Scanner scanner = new Scanner(new File("src/processos/quantum.txt"));
 		quantum = scanner.nextInt();
 	}
 
-	private static List<Integer> readPriorities() throws IOException {
-		List<Integer> priorities = new ArrayList<>();
-
-		Scanner prioritiesFile = new Scanner(new File("src/processos/prioridades.txt"));
-
-		while (prioritiesFile.hasNext()) {
-			String priority = prioritiesFile.next();
-			priorities.add(Integer.parseInt(priority));
-		}
-
-		return priorities;
-	}
-
 	private static void readProcessFiles(List<Integer> priorities) throws IOException {
-		ReadDatas readDatas = new ReadDatas();
 
 		for (int i = 1; i <= priorities.size(); i++) {
 			PCB processPCB = readDatas.readFile(i, priorities.get(i - 1));
@@ -49,8 +36,9 @@ public class Escalonador {
 	public static void main(String[] args) throws IOException {
 		readQuantum();
 		logger = Log.getInstance();
+		readDatas = new ReadDatas();
 
-		List<Integer> priorities = readPriorities();
+		List<Integer> priorities = readDatas.readPriorities();
 
 		readProcessFiles(priorities);
 

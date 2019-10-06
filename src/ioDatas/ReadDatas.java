@@ -18,6 +18,19 @@ public class ReadDatas {
         logger = Log.getInstance();
     }
 
+    public List<Integer> readPriorities() throws IOException {
+        List<Integer> priorities = new ArrayList<>();
+
+        Scanner prioritiesFile = new Scanner(new File("src/processos/prioridades.txt"));
+
+        while (prioritiesFile.hasNext()) {
+            String priority = prioritiesFile.next();
+            priorities.add(Integer.parseInt(priority));
+        }
+
+        return priorities;
+    }
+
     public PCB readFile(int proccessNumber, int processPriority) throws IOException {
         String processPath = "src/processos/" + (proccessNumber < 10 ? "0" + proccessNumber : proccessNumber) + ".txt";
         Scanner scanner = new Scanner(new File(processPath));
