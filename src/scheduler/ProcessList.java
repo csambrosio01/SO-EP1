@@ -33,4 +33,19 @@ public class ProcessList {
 	public static PCB removeNextInBlockedList() {
 		return blockedList.remove(0);
 	}
+
+	public static void decreaseBlockedListWait() {
+		if (blockedList.size() > 0) {
+			for (int i = 0; i < blockedList.size(); i++) {
+				PCB pcb = blockedList.remove(i);
+				pcb.decreaseWait();
+				if (pcb.getWait() == 0) {
+					pcb.getProcess().setState(State.RUNNING);
+					addReadyProcess(pcb);
+				} else {
+					blockedList.add(pcb);
+				}
+			}
+		}
+	}
 }
