@@ -5,6 +5,7 @@ import ioDatas.ReadDatas;
 import scheduler.PCB;
 import scheduler.ProcessList;
 import scheduler.ProcessTable;
+import scheduler.Scheduler;
 
 import java.io.IOException;
 import java.util.List;
@@ -32,6 +33,9 @@ public class Escalonador {
 		List<Integer> priorities = readDatas.readPriorities();
 
 		readProcessFiles(priorities);
+
+		Scheduler scheduler = new Scheduler();
+		scheduler.run();
 
 		logger.closeLogFile();
 	}
