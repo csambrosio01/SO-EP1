@@ -82,6 +82,8 @@ public class PCB implements Comparable<PCB>{
 	public int compareTo(PCB pcb) {
 		if (this.credit < pcb.credit) return 1;
 		else if (this.credit > pcb.credit) return -1;
-		else return 0;
+		else if (this.priority < pcb.priority) return 1;
+		else if (this.priority > pcb.priority) return -1;
+		else return this.process.getName().compareTo(pcb.process.getName());
 	}
 }
