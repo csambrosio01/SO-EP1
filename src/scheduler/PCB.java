@@ -8,6 +8,7 @@ public class PCB implements Comparable<PCB>{
 	private int registerY;
 	private int credit;
 	private int wait;
+	private int processQuantum;
 	
 
 	public PCB(Process process, int priority) {
@@ -18,6 +19,7 @@ public class PCB implements Comparable<PCB>{
 		this.registerX = 0;
 		this.registerY = 0;
 		this.wait = 0;
+		this.processQuantum = 1;
 	}
 	
 	// Process methods
@@ -76,7 +78,15 @@ public class PCB implements Comparable<PCB>{
 	public int getWait() {
 		return this.wait;
 	}
-	
+
+	//Quantum methods
+	public int getProcessQuantum() {
+		return processQuantum;
+	}
+
+	public void increaseProcessQuantum() {
+		this.processQuantum++;
+	}
 
 	@Override
 	public int compareTo(PCB pcb) {
