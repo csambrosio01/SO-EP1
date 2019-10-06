@@ -48,4 +48,10 @@ public class ProcessList {
 			}
 		}
 	}
+
+	public static boolean shouldContinue(PCB pcb) {
+		if (readyList.size() > 0) {
+			return pcb.compareTo(readyList.get(0)) < 0;
+		} else return true;
+	}
 }
