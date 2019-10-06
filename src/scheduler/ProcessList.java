@@ -10,10 +10,10 @@ public class ProcessList {
 	// The blockedList keeps the data in order of entry
 	public static List<PCB> blockedList = new ArrayList<PCB>();
 	
-	
+
 	public static void addReadyProcess(PCB pcb) {
 		readyList.add(pcb);
-		
+
 		for (int i = readyList.size()-1; i > 0 && pcb.compareTo(readyList.get(i-1)) < 0; i--) 
 			Collections.swap(readyList, i, i-1);
 	}
@@ -23,7 +23,11 @@ public class ProcessList {
 	}
 	
 	public static PCB removeNextInReadyList() {
-		return readyList.remove(0); // PCB with more priority
+		if (readyList.size() > 0) {
+			return readyList.remove(0); // PCB with more priority
+		} else {
+			return null;
+		}
 	}
 	
 	public static PCB removeNextInBlockedList() {
