@@ -12,15 +12,17 @@ import java.util.Scanner;
 
 public class ReadDatas {
 
+    private String processDirectoryPath = "src/processos/";
+
     public int readQuantum() throws IOException {
-        Scanner scanner = new Scanner(new File("src/processos/quantum.txt"));
+        Scanner scanner = new Scanner(new File(processDirectoryPath + "quantum.txt"));
         return scanner.nextInt();
     }
 
     public List<Integer> readPriorities() throws IOException {
         List<Integer> priorities = new ArrayList<>();
 
-        Scanner prioritiesFile = new Scanner(new File("src/processos/prioridades.txt"));
+        Scanner prioritiesFile = new Scanner(new File(processDirectoryPath + "prioridades.txt"));
 
         while (prioritiesFile.hasNext()) {
             String priority = prioritiesFile.next();
@@ -33,7 +35,7 @@ public class ReadDatas {
     public PCB readFile(int proccessNumber, int processPriority) throws IOException {
         Log logger = Log.getInstance();
 
-        String processPath = "src/processos/" + (proccessNumber < 10 ? "0" + proccessNumber : proccessNumber) + ".txt";
+        String processPath = processDirectoryPath + (proccessNumber < 10 ? "0" + proccessNumber : proccessNumber) + ".txt";
         Scanner scanner = new Scanner(new File(processPath));
 
         List<String> instructions = new ArrayList<>();
