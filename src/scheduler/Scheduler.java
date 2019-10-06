@@ -11,6 +11,8 @@ public class Scheduler {
 
     private Log logger;
 
+    //TODO: Verify if changes, instructionsRan and average of instructions are calculated and showed correctly
+    private int changes = 0;
     private List<Integer> instructionsRan = new ArrayList<>();
 
     public Scheduler() throws IOException {
@@ -84,4 +86,31 @@ public class Scheduler {
             }
         } while (runAgain);
     }
+
+    public void run() {
+        while (ProcessTable.processTable.size() != 0) {
+            PCB processPCB;
+            if ((processPCB = ProcessList.removeNextInReadyList()) != null) {
+                if (processPCB.getCredit() == 0) {
+                    ProcessList.addReadyProcess(processPCB);
+                    ProcessList.resetReadyList();
+                } else {
+                    executeProcess(processPCB);
+                    changes++;
+                }
+            } else {
+                ProcessList.decreaseBlockedListWait();
+            }
+        }
+
+        int instructions = 0;
+        for (Integer instructionRunned : instructionsRan) {
+            instructions += instructionRunned;
+        }
+
+        logger.addMessage("AVERAGE_EXCHANGES", changes);
+        logger.addMessage("INSTRUCTION_AVERAGE", instructions / changes);
+        logger.addMessage("QUANTUM", Escalonador.quantum);
+    }
+
 }
