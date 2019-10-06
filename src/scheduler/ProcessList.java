@@ -54,4 +54,20 @@ public class ProcessList {
 			return pcb.compareTo(readyList.get(0)) < 0;
 		} else return true;
 	}
+
+	public static void resetReadyList() {
+		for (PCB pcb : readyList) {
+			pcb.equalsCreditWithPriority();
+		}
+
+		for (int i = readyList.size(); i >= 1; i--) {
+			for (int j = 1; j < i; j++) {
+				if (readyList.get(j - 1).getCredit() < readyList.get(j).getCredit()) {
+					PCB aux = readyList.get(j);
+					readyList.set(j, readyList.get(j - 1));
+					readyList.set(j - 1, aux);
+				}
+			}
+		}
+	}
 }
