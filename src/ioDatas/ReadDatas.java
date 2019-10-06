@@ -12,10 +12,9 @@ import java.util.Scanner;
 
 public class ReadDatas {
 
-    private Log logger;
-
-    public ReadDatas() throws IOException {
-        logger = Log.getInstance();
+    public int readQuantum() throws IOException {
+        Scanner scanner = new Scanner(new File("src/processos/quantum.txt"));
+        return scanner.nextInt();
     }
 
     public List<Integer> readPriorities() throws IOException {
@@ -32,6 +31,8 @@ public class ReadDatas {
     }
 
     public PCB readFile(int proccessNumber, int processPriority) throws IOException {
+        Log logger = Log.getInstance();
+
         String processPath = "src/processos/" + (proccessNumber < 10 ? "0" + proccessNumber : proccessNumber) + ".txt";
         Scanner scanner = new Scanner(new File(processPath));
 
