@@ -1,8 +1,7 @@
 package ioDatas;
 
-import scheduler.PCB;
+import scheduler.*;
 import scheduler.Process;
-import scheduler.State;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,7 +18,16 @@ public class ReadDatas {
         return scanner.nextInt();
     }
 
-    public List<Integer> readPriorities() throws IOException {
+    public void readProcessFiles() throws IOException {
+        List<Integer> priorities = readPriorities();
+        for (int i = 1; i <= priorities.size(); i++) {
+            PCB processPCB = readFile(i, priorities.get(i - 1));
+            ProcessTable.addPCBonProcessTable(processPCB);
+            ProcessList.addReadyProcess(processPCB);
+        }
+    }
+
+    private List<Integer> readPriorities() throws IOException {
         List<Integer> priorities = new ArrayList<>();
 
         Scanner prioritiesFile = new Scanner(new File(processDirectoryPath + "prioridades.txt"));
@@ -32,7 +40,7 @@ public class ReadDatas {
         return priorities;
     }
 
-    public PCB readFile(int proccessNumber, int processPriority) throws IOException {
+    private PCB readFile(int proccessNumber, int processPriority) throws IOException {
         Log logger = Log.getInstance();
 
         String processPath = processDirectoryPath + (proccessNumber < 10 ? "0" + proccessNumber : proccessNumber) + ".txt";
