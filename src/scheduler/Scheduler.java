@@ -62,7 +62,7 @@ public class Scheduler {
 
             instructionsRan.add(i);
 
-            logger.addMessage(i == 0 ? "INTERRUPTING_PROCESS_1" : "INTERRUPTING_PROCESS_2", process.getName(), i);
+            logger.addMessage(i == 1 ? "INTERRUPTING_PROCESS_1" : "INTERRUPTING_PROCESS_2", process.getName(), i);
             processPCB.increaseProcessQuantum();
             processPCB.decreaseTwoCredits();
 
