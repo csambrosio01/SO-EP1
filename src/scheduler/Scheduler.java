@@ -12,8 +12,8 @@ public class Scheduler {
     private Log logger;
 
     //TODO: Verify if changes, instructionsRan and average of instructions are calculated and showed correctly
-    private int changes = 0;
-    private List<Integer> instructionsRan = new ArrayList<>();
+    private double changes = 0;
+    private List<Double> instructionsRan = new ArrayList<>();
 
     public Scheduler() throws IOException {
         logger = Log.getInstance();
@@ -60,7 +60,7 @@ public class Scheduler {
                 }
             }
 
-            instructionsRan.add(i);
+            instructionsRan.add((double) i);
 
             logger.addMessage(i == 1 ? "INTERRUPTING_PROCESS_1" : "INTERRUPTING_PROCESS_2", process.getName(), i);
             processPCB.increaseProcessQuantum();
@@ -103,8 +103,8 @@ public class Scheduler {
             }
         }
 
-        int instructions = 0;
-        for (Integer instructionRunned : instructionsRan) {
+        double instructions = 0;
+        for (Double instructionRunned : instructionsRan) {
             instructions += instructionRunned;
         }
 
