@@ -104,8 +104,8 @@ public class Scheduler {
         }
 
         double instructions = 0;
-        for (Double instructionRunned : instructionsRan) {
-            instructions += instructionRunned;
+        for (Double instructionRan : instructionsRan) {
+            instructions += instructionRan;
         }
 
         logger.addMessage("AVERAGE_EXCHANGES", changes);
