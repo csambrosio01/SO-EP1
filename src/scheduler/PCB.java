@@ -26,6 +26,11 @@ public class PCB implements Comparable<PCB>{
 	public Process getProcess() {
 		return this.process;
 	}
+
+	// Priority methods
+	public int getPriority() {
+		return this.priority;
+	}
 	
 	// PC methods
 	public void increaseProgramCounter() {
