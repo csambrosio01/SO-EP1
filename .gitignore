@@ -31,3 +31,4 @@ gradle/
 !gradle/wrapper/gradle-wrapper.properties
 .DS_store
 out/
+log*
