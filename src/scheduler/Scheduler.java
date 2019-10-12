@@ -89,13 +89,15 @@ public class Scheduler {
 
     public void run() {
         while (ProcessTable.processTable.size() != 0) {
-            PCB processPCB;
-            if ((processPCB = ProcessList.removeNextInReadyList()) != null) {
-                if (processPCB.getCredit() == 0) {
-                    ProcessList.addReadyProcess(processPCB);
-                    ProcessList.resetReadyList();
+            if (!ProcessList.readyList.isEmpty()) {
+                if (ProcessList.allProcessInReadyListWithZEROCredit()) {
+                    if (ProcessList.blockedList.isEmpty() && !ProcessList.allProcessInReadyListWithZEROPriority()) {
+                        ProcessList.resetReadyList();
+                    } else {
+                        //TODO: Round Robin
+                    }
                 } else {
-                    executeProcess(processPCB);
+                    executeProcess(ProcessList.removeNextInReadyList());
                     changes++;
                 }
             } else {
