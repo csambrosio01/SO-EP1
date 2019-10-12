@@ -75,4 +75,11 @@ public class ProcessList {
 			}
 		}
 	}
+
+	public static boolean allProcessInReadyListWithZEROCredit() {
+		for (PCB pcb : readyList) {
+			if (pcb.getCredit() > 0) return false;
+		}
+		return true;
+	}
 }
