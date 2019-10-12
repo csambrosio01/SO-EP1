@@ -17,6 +17,10 @@ public class ProcessList {
 		for (int i = readyList.size()-1; i > 0 && pcb.compareTo(readyList.get(i-1)) < 0; i--) 
 			Collections.swap(readyList, i, i-1);
 	}
+
+	public static void addReadyProcessInLastPosition(PCB pcb) {
+		readyList.add(pcb);
+	}
 	
 	public static void addBlockedProcess(PCB pcb) {
 		blockedList.add(pcb);
