@@ -82,4 +82,11 @@ public class ProcessList {
 		}
 		return true;
 	}
+
+	public static boolean allProcessInReadyListWithZEROPriority() {
+		for (PCB pcb : readyList) {
+			if (pcb.getPriority() > 0) return false;
+		}
+		return true;
+	}
 }
