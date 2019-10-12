@@ -19,7 +19,7 @@ public class Scheduler {
         logger = Log.getInstance();
     }
 
-    private void executeProcess(PCB processPCB) {
+    private void executeProcess(PCB processPCB, boolean roundRobin) {
         boolean runAgain;
         do {
             runAgain = false;
@@ -28,7 +28,7 @@ public class Scheduler {
             process.setState(State.RUNNING);
             ProcessList.decreaseBlockedListWait();
 
-            int instructionsToRun = Escalonador.quantum * processPCB.getProcessQuantum();
+            int instructionsToRun = roundRobin ? Escalonador.quantum : Escalonador.quantum * processPCB.getProcessQuantum();
 
             boolean processEnd = false;
             boolean processIO = false;
@@ -72,7 +72,7 @@ public class Scheduler {
                     processPCB.setWaitTo2();
                     ProcessList.addBlockedProcess(processPCB);
                 } else {
-                    if (ProcessList.shouldContinue(processPCB)) {
+                    if (!roundRobin && ProcessList.shouldContinue(processPCB)) {
                         runAgain = true;
                     } else {
                         process.setState(State.READY);
@@ -87,64 +87,6 @@ public class Scheduler {
         } while (runAgain);
     }
 
-    private void executeRoundRobin(PCB processPCB) {
-        Process process = processPCB.getProcess();
-        logger.addMessage("RUNNING_PROCESS", process.getName());
-        process.setState(State.RUNNING);
-        ProcessList.decreaseBlockedListWait();
-
-        int instructionsToRun = Escalonador.quantum;
-
-        boolean processEnd = false;
-        boolean processIO = false;
-        int i;
-        loop: for (i = 0; i < instructionsToRun; i++) {
-            Instruction instruction = process.getTypeOfInstruction(processPCB.getProgramCounter());
-            String instructionExecutor = process.getInstruction(processPCB.getProgramCounter());
-            processPCB.increaseProgramCounter();
-            switch (instruction) {
-                case ATTRIBUTIONX:
-                    String xAttribute = instructionExecutor.split("=")[1];
-                    processPCB.setRegisterX(Integer.parseInt(xAttribute));
-                    break;
-                case ATTRIBUTIONY:
-                    String yAttribute = instructionExecutor.split("=")[1];
-                    processPCB.setRegisterY(Integer.parseInt(yAttribute));
-                    break;
-                case INTERRUPTION:
-                    logger.addMessage("IO_STARTED", process.getName());
-                    processIO = true;
-                    i++;
-                    break loop;
-                case END:
-                    processEnd = true;
-                    i++;
-                    break loop;
-                default:
-                    break;
-            }
-        }
-
-        instructionsRan.add((double) i);
-
-        logger.addMessage(i == 1 ? "INTERRUPTING_PROCESS_1" : "INTERRUPTING_PROCESS_2", process.getName(), i);
-
-        if (!processEnd) {
-            if (processIO) {
-                process.setState(State.BLOCKED);
-                processPCB.setWaitTo2();
-                ProcessList.addBlockedProcess(processPCB);
-            } else {
-                process.setState(State.READY);
-                ProcessList.addReadyProcessInLastPosition(processPCB);
-            }
-        } else {
-            logger.addMessage("ENDING_PROCESS", process.getName(), processPCB.getRegisterX(), processPCB.getRegisterY());
-            process.setState(State.FINISHED);
-            ProcessTable.removePCBofProcessTable(processPCB);
-        }
-    }
-
     public void run() {
         while (ProcessTable.processTable.size() != 0) {
             if (!ProcessList.readyList.isEmpty()) {
@@ -152,11 +94,11 @@ public class Scheduler {
                     if (ProcessList.blockedList.isEmpty() && !ProcessList.allProcessInReadyListWithZEROPriority()) {
                         ProcessList.resetReadyList();
                     } else {
-                        executeRoundRobin(ProcessList.removeNextInReadyList());
+                        executeProcess(ProcessList.removeNextInReadyList(), true);
                         changes++;
                     }
                 } else {
-                    executeProcess(ProcessList.removeNextInReadyList());
+                    executeProcess(ProcessList.removeNextInReadyList(), false);
                     changes++;
                 }
             } else {
