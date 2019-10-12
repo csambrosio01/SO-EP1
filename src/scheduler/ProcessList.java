@@ -67,7 +67,7 @@ public class ProcessList {
 
 		for (int i = readyList.size(); i >= 1; i--) {
 			for (int j = 1; j < i; j++) {
-				if (readyList.get(j - 1).getCredit() < readyList.get(j).getCredit()) {
+				if (readyList.get(j - 1).compareTo(readyList.get(j)) < 0) {
 					PCB aux = readyList.get(j);
 					readyList.set(j, readyList.get(j - 1));
 					readyList.set(j - 1, aux);
