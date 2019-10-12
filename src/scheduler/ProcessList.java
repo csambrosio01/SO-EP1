@@ -62,6 +62,7 @@ public class ProcessList {
 	public static void resetReadyList() {
 		for (PCB pcb : readyList) {
 			pcb.equalsCreditWithPriority();
+			pcb.setProcessQuantumTo1();
 		}
 
 		for (int i = readyList.size(); i >= 1; i--) {
