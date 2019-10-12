@@ -28,7 +28,7 @@ public class Scheduler {
             process.setState(State.RUNNING);
             ProcessList.decreaseBlockedListWait();
 
-            int instructionsToRun = roundRobin ? Escalonador.quantum : Escalonador.quantum * processPCB.getProcessQuantum();
+            int instructionsToRun = Escalonador.quantum * (roundRobin ? 1 : processPCB.getProcessQuantum());
 
             boolean processEnd = false;
             boolean processIO = false;
