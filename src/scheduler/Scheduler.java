@@ -12,7 +12,7 @@ public class Scheduler {
     private Log logger;
 
     //TODO: Verify if changes, instructionsRan and average of instructions are calculated and showed correctly
-    private double changes = 0;
+    private double changes = -1;
     private List<Double> instructionsRan = new ArrayList<>();
 
     public Scheduler() throws IOException {
@@ -94,12 +94,12 @@ public class Scheduler {
                     if (ProcessList.blockedList.isEmpty() && !ProcessList.allProcessInReadyListWithZEROPriority()) {
                         ProcessList.resetReadyList();
                     } else {
-                        executeProcess(ProcessList.removeNextInReadyList(), true);
                         changes++;
+                        executeProcess(ProcessList.removeNextInReadyList(), true);
                     }
                 } else {
-                    executeProcess(ProcessList.removeNextInReadyList(), false);
                     changes++;
+                    executeProcess(ProcessList.removeNextInReadyList(), false);
                 }
             } else {
                 ProcessList.decreaseBlockedListWait();
