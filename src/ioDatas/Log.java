@@ -25,7 +25,7 @@ public class Log {
 		int quantum = Escalonador.quantum;
 
 		String filename = quantum < 10 ? ("log0" +quantum+ ".txt") : ("log" +quantum+ ".txt");
-		logFile = new PrintStream("src/processos/" +filename);
+		logFile = new PrintStream("src/saveLogFile/" +filename);
 	}
 	
 	public static Log getInstance () throws IOException {
