@@ -22,7 +22,6 @@ public class Scheduler {
             Process process = processPCB.getProcess();
             logger.addMessage("RUNNING_PROCESS", process.getName());
             process.setState(State.RUNNING);
-            ProcessList.decreaseBlockedListWait(roundRobin);
 
             int instructionsToRun = Escalonador.quantum * (roundRobin ? 1 : processPCB.getProcessQuantum());
 
@@ -69,12 +68,15 @@ public class Scheduler {
                 if (processIO) {
                     process.setState(State.BLOCKED);
                     processPCB.setWaitTo2();
+                    ProcessList.decreaseBlockedListWait(roundRobin);
                     ProcessList.addBlockedProcess(processPCB);
                 } else {
                     if (roundRobin) {
                         process.setState(State.READY);
                         ProcessList.addReadyProcessInLastPosition(processPCB);
+                        ProcessList.decreaseBlockedListWait(roundRobin);
                     } else {
+                        ProcessList.decreaseBlockedListWait(roundRobin);
                         if (ProcessList.shouldContinue(processPCB)) runAgain = true;
                         else {
                             process.setState(State.READY);
