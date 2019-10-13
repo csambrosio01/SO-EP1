@@ -33,10 +33,6 @@ public class ProcessList {
 			return null;
 		}
 	}
-	
-	public static PCB removeNextInBlockedList() {
-		return blockedList.remove(0);
-	}
 
 	public static void decreaseBlockedListWait() {
 		if (blockedList.size() > 0) {
