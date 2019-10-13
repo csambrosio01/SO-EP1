@@ -13,7 +13,7 @@ public class Scheduler {
 
     //TODO: Verify if changes, instructionsRan and average of instructions are calculated and showed correctly
     private double changes = -1;
-    private List<Double> instructionsRan = new ArrayList<>();
+    private double instructionsRan = 0;
 
     public Scheduler() throws IOException {
         logger = Log.getInstance();
@@ -60,7 +60,7 @@ public class Scheduler {
                 }
             }
 
-            instructionsRan.add((double) i);
+            instructionsRan += i;
 
             logger.addMessage(i == 1 ? "INTERRUPTING_PROCESS_1" : "INTERRUPTING_PROCESS_2", process.getName(), i);
 
@@ -113,13 +113,8 @@ public class Scheduler {
             }
         }
 
-        double instructions = 0;
-        for (Double instructionRan : instructionsRan) {
-            instructions += instructionRan;
-        }
-
         logger.addMessage("AVERAGE_EXCHANGES", changes);
-        logger.addMessage("INSTRUCTION_AVERAGE", instructions / changes);
+        logger.addMessage("INSTRUCTION_AVERAGE", instructionsRan / changes);
         logger.addMessage("QUANTUM", Escalonador.quantum);
     }
 
