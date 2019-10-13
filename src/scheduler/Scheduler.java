@@ -8,7 +8,7 @@ import java.io.IOException;
 public class Scheduler {
 
     private Log logger;
-    private double changes = -1;
+    private double changes = 0;
     private double instructionsRan = 0;
 
     public Scheduler() throws IOException {
@@ -99,12 +99,12 @@ public class Scheduler {
                     if (ProcessList.blockedList.isEmpty() && !ProcessList.allProcessInReadyListWithZEROPriority()) {
                         ProcessList.resetReadyList();
                     } else {
-                        changes++;
                         executeProcess(ProcessList.removeNextInReadyList(), true);
+                        changes++;
                     }
                 } else {
-                    changes++;
                     executeProcess(ProcessList.removeNextInReadyList(), false);
+                    changes++;
                 }
             } else {
                 ProcessList.decreaseBlockedListWait();
