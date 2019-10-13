@@ -68,15 +68,15 @@ public class Scheduler {
                 if (processIO) {
                     process.setState(State.BLOCKED);
                     processPCB.setWaitTo2();
-                    ProcessList.decreaseBlockedListWait(roundRobin);
+                    ProcessList.decreaseBlockedListWait();
                     ProcessList.addBlockedProcess(processPCB);
                 } else {
                     if (roundRobin) {
                         process.setState(State.READY);
                         ProcessList.addReadyProcessInLastPosition(processPCB);
-                        ProcessList.decreaseBlockedListWait(roundRobin);
+                        ProcessList.decreaseBlockedListWait();
                     } else {
-                        ProcessList.decreaseBlockedListWait(roundRobin);
+                        ProcessList.decreaseBlockedListWait();
                         if (ProcessList.shouldContinue(processPCB)) runAgain = true;
                         else {
                             process.setState(State.READY);
@@ -109,7 +109,7 @@ public class Scheduler {
                     changes++;
                 }
             } else {
-                ProcessList.decreaseBlockedListWait(false);
+                ProcessList.decreaseBlockedListWait();
             }
         }
 

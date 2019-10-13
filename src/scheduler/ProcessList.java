@@ -34,17 +34,21 @@ public class ProcessList {
 		}
 	}
 
-	public static void decreaseBlockedListWait(boolean roundRobin) {
+	public static void decreaseBlockedListWait() {
 		if (blockedList.size() > 0) {
 			for (int i = 0; i < blockedList.size(); i++) {
 				PCB pcb = blockedList.remove(i);
 				pcb.decreaseWait();
 				if (pcb.getWait() == 0) {
 					pcb.getProcess().setState(State.READY);
-					if (pcb.getCredit() > 0 || !roundRobin) {
+					if (pcb.getCredit() > 0) {
 						addReadyProcess(pcb);
 					} else {
-						addReadyProcessInLastPosition(pcb);
+						if (allProcessInReadyListWithZEROCredit()) {
+							addReadyProcessInLastPosition(pcb);
+						} else {
+							addReadyProcess(pcb);
+						}
 					}
 				} else {
 					blockedList.add(pcb);
