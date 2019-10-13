@@ -22,7 +22,7 @@ public class Scheduler {
             Process process = processPCB.getProcess();
             logger.addMessage("RUNNING_PROCESS", process.getName());
             process.setState(State.RUNNING);
-            ProcessList.decreaseBlockedListWait();
+            ProcessList.decreaseBlockedListWait(roundRobin);
 
             int instructionsToRun = Escalonador.quantum * (roundRobin ? 1 : processPCB.getProcessQuantum());
 
@@ -107,7 +107,7 @@ public class Scheduler {
                     changes++;
                 }
             } else {
-                ProcessList.decreaseBlockedListWait();
+                ProcessList.decreaseBlockedListWait(false);
             }
         }
 
