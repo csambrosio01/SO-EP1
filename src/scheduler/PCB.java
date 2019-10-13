@@ -88,7 +88,7 @@ public class PCB implements Comparable<PCB>{
 	public int getProcessQuantum() {
 		return processQuantum;
 	}
-	
+
 	public void increaseProcessQuantum() {
 		this.processQuantum++;
 	}
