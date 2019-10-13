@@ -4,8 +4,6 @@ import ioDatas.Log;
 import launcher.Escalonador;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Scheduler {
 
