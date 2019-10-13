@@ -44,10 +44,10 @@ public class ReadDatas {
         return priorities;
     }
 
-    private PCB readFile(int proccessNumber, int processPriority) throws IOException {
+    private PCB readFile(int processNumber, int processPriority) throws IOException {
         Log logger = Log.getInstance();
 
-        String processPath = processDirectoryPath + (proccessNumber < 10 ? "0" + proccessNumber : proccessNumber) + ".txt";
+        String processPath = processDirectoryPath + (processNumber < 10 ? "0" + processNumber : processNumber) + ".txt";
         Scanner scanner = new Scanner(new File(processPath));
 
         List<String> instructions = new ArrayList<>();
