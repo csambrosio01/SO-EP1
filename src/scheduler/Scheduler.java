@@ -19,7 +19,7 @@ public class Scheduler {
         logger = Log.getInstance();
     }
 
-    private void executeProcess(PCB processPCB) {
+    private void executeProcess(PCB processPCB, boolean roundRobin) {
         boolean runAgain;
         do {
             runAgain = false;
@@ -28,7 +28,7 @@ public class Scheduler {
             process.setState(State.RUNNING);
             ProcessList.decreaseBlockedListWait();
 
-            int instructionsToRun = Escalonador.quantum * processPCB.getProcessQuantum();
+            int instructionsToRun = Escalonador.quantum * (roundRobin ? 1 : processPCB.getProcessQuantum());
 
             boolean processEnd = false;
             boolean processIO = false;
@@ -72,7 +72,7 @@ public class Scheduler {
                     processPCB.setWaitTo2();
                     ProcessList.addBlockedProcess(processPCB);
                 } else {
-                    if (ProcessList.shouldContinue(processPCB)) {
+                    if (!roundRobin && ProcessList.shouldContinue(processPCB)) {
                         runAgain = true;
                     } else {
                         process.setState(State.READY);
@@ -89,13 +89,16 @@ public class Scheduler {
 
     public void run() {
         while (ProcessTable.processTable.size() != 0) {
-            PCB processPCB;
-            if ((processPCB = ProcessList.removeNextInReadyList()) != null) {
-                if (processPCB.getCredit() == 0) {
-                    ProcessList.addReadyProcess(processPCB);
-                    ProcessList.resetReadyList();
+            if (!ProcessList.readyList.isEmpty()) {
+                if (ProcessList.allProcessInReadyListWithZEROCredit()) {
+                    if (ProcessList.blockedList.isEmpty() && !ProcessList.allProcessInReadyListWithZEROPriority()) {
+                        ProcessList.resetReadyList();
+                    } else {
+                        executeProcess(ProcessList.removeNextInReadyList(), true);
+                        changes++;
+                    }
                 } else {
-                    executeProcess(processPCB);
+                    executeProcess(ProcessList.removeNextInReadyList(), false);
                     changes++;
                 }
             } else {

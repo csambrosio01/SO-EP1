@@ -17,7 +17,7 @@ public class Log {
 
 	private Log() throws IOException {
 		Locale ptBR = new Locale("pt","BR");
-		this.bundle = ResourceBundle.getBundle("messages", ptBR);
+		this.bundle = ResourceBundle.getBundle("resources/messages", ptBR);
 
 		int quantum = Escalonador.quantum;
 
