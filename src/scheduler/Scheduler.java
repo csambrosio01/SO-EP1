@@ -91,6 +91,8 @@ public class Scheduler {
     }
 
     public void run() {
+        int numOfProcess = ProcessTable.processTable.size();
+
         while (ProcessTable.processTable.size() != 0) {
             if (!ProcessList.readyList.isEmpty()) {
                 if (ProcessList.allProcessInReadyListWithZEROCredit()) {
@@ -109,7 +111,7 @@ public class Scheduler {
             }
         }
 
-        logger.addMessage("AVERAGE_EXCHANGES", changes);
+        logger.addMessage("AVERAGE_EXCHANGES", changes / numOfProcess);
         logger.addMessage("INSTRUCTION_AVERAGE", instructionsRan / changes);
         logger.addMessage("QUANTUM", Escalonador.quantum);
     }
