@@ -10,8 +10,6 @@ import java.util.List;
 public class Scheduler {
 
     private Log logger;
-
-    //TODO: Verify if changes, instructionsRan and average of instructions are calculated and showed correctly
     private double changes = -1;
     private double instructionsRan = 0;
 
