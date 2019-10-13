@@ -63,8 +63,11 @@ public class Scheduler {
             instructionsRan.add((double) i);
 
             logger.addMessage(i == 1 ? "INTERRUPTING_PROCESS_1" : "INTERRUPTING_PROCESS_2", process.getName(), i);
-            processPCB.increaseProcessQuantum();
-            processPCB.decreaseTwoCredits();
+
+            if (!roundRobin) {
+                processPCB.increaseProcessQuantum();
+                processPCB.decreaseTwoCredits();
+            }
 
             if (!processEnd) {
                 if (processIO) {
@@ -72,11 +75,15 @@ public class Scheduler {
                     processPCB.setWaitTo2();
                     ProcessList.addBlockedProcess(processPCB);
                 } else {
-                    if (!roundRobin && ProcessList.shouldContinue(processPCB)) {
-                        runAgain = true;
-                    } else {
+                    if (roundRobin) {
                         process.setState(State.READY);
-                        ProcessList.addReadyProcess(processPCB);
+                        ProcessList.addReadyProcessInLastPosition(processPCB);
+                    } else {
+                        if (ProcessList.shouldContinue(processPCB)) runAgain = true;
+                        else {
+                            process.setState(State.READY);
+                            ProcessList.addReadyProcess(processPCB);
+                        }
                     }
                 }
             } else {
