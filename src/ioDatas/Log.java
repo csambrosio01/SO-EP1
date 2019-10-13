@@ -20,7 +20,7 @@ public class Log {
 		Locale ptBR = new Locale("pt","BR");
 		this.bundle = ResourceBundle.getBundle("resources/messages", ptBR);
 
-		formatter = new MessageFormat("");
+		formatter = new MessageFormat("", Locale.US);
 
 		int quantum = Escalonador.quantum;
 
