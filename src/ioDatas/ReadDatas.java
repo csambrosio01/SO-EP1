@@ -15,7 +15,9 @@ public class ReadDatas {
 
     public int readQuantum() throws IOException {
         Scanner scanner = new Scanner(new File(processDirectoryPath + "quantum.txt"));
-        return scanner.nextInt();
+        int quantum = scanner.nextInt();
+        scanner.close();
+        return quantum;
     }
 
     public void readProcessFiles() throws IOException {
@@ -37,13 +39,15 @@ public class ReadDatas {
             priorities.add(Integer.parseInt(priority));
         }
 
+        prioritiesFile.close();
+
         return priorities;
     }
 
-    private PCB readFile(int proccessNumber, int processPriority) throws IOException {
+    private PCB readFile(int processNumber, int processPriority) throws IOException {
         Log logger = Log.getInstance();
 
-        String processPath = processDirectoryPath + (proccessNumber < 10 ? "0" + proccessNumber : proccessNumber) + ".txt";
+        String processPath = processDirectoryPath + (processNumber < 10 ? "0" + processNumber : processNumber) + ".txt";
         Scanner scanner = new Scanner(new File(processPath));
 
         List<String> instructions = new ArrayList<>();
@@ -57,6 +61,8 @@ public class ReadDatas {
         }
 
         Process process = new Process(fileName, instructions.toArray(new String[0]), State.READY);
+
+        scanner.close();
         return new PCB(process, processPriority);
     }
 

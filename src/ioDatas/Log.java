@@ -14,15 +14,18 @@ public class Log {
 	private ResourceBundle bundle;
 
 	private static Log logInstance;
+	private MessageFormat formatter;
 
 	private Log() throws IOException {
 		Locale ptBR = new Locale("pt","BR");
 		this.bundle = ResourceBundle.getBundle("resources/messages", ptBR);
 
+		formatter = new MessageFormat("", Locale.US);
+
 		int quantum = Escalonador.quantum;
 
 		String filename = quantum < 10 ? ("log0" +quantum+ ".txt") : ("log" +quantum+ ".txt");
-		logFile = new PrintStream("src/processos/" +filename);
+		logFile = new PrintStream("src/saveLogFile/" +filename);
 	}
 	
 	public static Log getInstance () throws IOException {
@@ -32,7 +35,6 @@ public class Log {
 	}
 	
 	public void addMessage(String message, Object... args) {
-		MessageFormat formatter = new MessageFormat("");
 		formatter.applyPattern(bundle.getString(message));
 		logFile.println(formatter.format(args));
 	}

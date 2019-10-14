@@ -33,10 +33,6 @@ public class ProcessList {
 			return null;
 		}
 	}
-	
-	public static PCB removeNextInBlockedList() {
-		return blockedList.remove(0);
-	}
 
 	public static void decreaseBlockedListWait() {
 		if (blockedList.size() > 0) {
@@ -44,8 +40,16 @@ public class ProcessList {
 				PCB pcb = blockedList.remove(i);
 				pcb.decreaseWait();
 				if (pcb.getWait() == 0) {
-					pcb.getProcess().setState(State.RUNNING);
-					addReadyProcess(pcb);
+					pcb.getProcess().setState(State.READY);
+					if (pcb.getCredit() > 0) {
+						addReadyProcess(pcb);
+					} else {
+						if (allProcessInReadyListWithZEROCredit()) {
+							addReadyProcessInLastPosition(pcb);
+						} else {
+							addReadyProcess(pcb);
+						}
+					}
 				} else {
 					blockedList.add(pcb);
 				}
@@ -67,10 +71,8 @@ public class ProcessList {
 
 		for (int i = readyList.size(); i >= 1; i--) {
 			for (int j = 1; j < i; j++) {
-				if (readyList.get(j - 1).getCredit() < readyList.get(j).getCredit()) {
-					PCB aux = readyList.get(j);
-					readyList.set(j, readyList.get(j - 1));
-					readyList.set(j - 1, aux);
+				if (readyList.get(j - 1).compareTo(readyList.get(j)) < 0) {
+					Collections.swap(readyList, j, j-1);
 				}
 			}
 		}
