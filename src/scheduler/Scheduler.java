@@ -88,6 +88,7 @@ public class Scheduler {
                 logger.addMessage("ENDING_PROCESS", process.getName(), processPCB.getRegisterX(), processPCB.getRegisterY());
                 process.setState(State.FINISHED);
                 ProcessTable.removePCBofProcessTable(processPCB);
+                ProcessList.decreaseBlockedListWait();
             }
         } while (runAgain);
     }
