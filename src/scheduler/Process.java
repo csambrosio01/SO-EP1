@@ -4,12 +4,14 @@ public class Process {
 	private final String [] instructions; 
 	private State state;
 	private String name;
+	private int number;
 
 	
-	public Process(String name, String[] instructions, State state) {
+	public Process(String name, String[] instructions, State state, int number) {
 		this.name = name;
 		this.setState(state);
 		this.instructions = instructions;
+		this.number = number;
 	}
 	
 	public String getInstruction(int index) {
@@ -44,5 +46,9 @@ public class Process {
 	
 	public String getName() {
 		return this.name;
+	}
+
+	public int getNumber() {
+		return this.number;
 	}
 }

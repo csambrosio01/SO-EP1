@@ -60,7 +60,7 @@ public class ReadDatas {
             instructions.add(content);
         }
 
-        Process process = new Process(fileName, instructions.toArray(new String[0]), State.READY);
+        Process process = new Process(fileName, instructions.toArray(new String[0]), State.READY, processNumber);
 
         scanner.close();
         return new PCB(process, processPriority);
