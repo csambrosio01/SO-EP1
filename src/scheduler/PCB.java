@@ -103,7 +103,7 @@ public class PCB implements Comparable<PCB>{
 		else if (this.credit > pcb.credit) return -1;
 		else if (this.priority < pcb.priority) return 1;
 		else if (this.priority > pcb.priority) return -1;
-		else if (this.process.getNumber() < pcb.process.getNumber()) return 1;
+		else if (this.process.getNumber() > pcb.process.getNumber()) return 1;
 		else return -1;
 	}
 }
