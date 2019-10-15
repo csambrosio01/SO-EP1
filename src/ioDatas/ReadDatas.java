@@ -27,6 +27,7 @@ public class ReadDatas {
             ProcessTable.addPCBonProcessTable(processPCB);
             ProcessList.addReadyProcess(processPCB);
         }
+        logProcessName();
     }
 
     private List<Integer> readPriorities() throws IOException {
@@ -45,15 +46,12 @@ public class ReadDatas {
     }
 
     private PCB readFile(int processNumber, int processPriority) throws IOException {
-        Log logger = Log.getInstance();
-
         String processPath = processDirectoryPath + (processNumber < 10 ? "0" + processNumber : processNumber) + ".txt";
         Scanner scanner = new Scanner(new File(processPath));
 
         List<String> instructions = new ArrayList<>();
 
         String fileName = scanner.nextLine();
-        logger.addMessage("LOADING_PROCESS", fileName);
 
         while (scanner.hasNextLine()) {
             String content = scanner.nextLine();
@@ -64,6 +62,13 @@ public class ReadDatas {
 
         scanner.close();
         return new PCB(process, processPriority);
+    }
+
+    private void logProcessName() throws IOException {
+        Log logger = Log.getInstance();
+        for (PCB pcb : ProcessList.readyList) {
+            logger.addMessage("LOADING_PROCESS", pcb.getProcess().getName());
+        }
     }
 
 }
