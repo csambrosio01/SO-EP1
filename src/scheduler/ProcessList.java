@@ -36,10 +36,13 @@ public class ProcessList {
 
 	public static void decreaseBlockedListWait() {
 		if (blockedList.size() > 0) {
-			for (int i = 0; i < blockedList.size(); i++) {
-				PCB pcb = blockedList.remove(i);
+			for (PCB pcb : blockedList) {
 				pcb.decreaseWait();
-				if (pcb.getWait() == 0) {
+			}
+			int blockedListSize = blockedList.size();
+			for (int i = 0; i < blockedListSize; i++) {
+				if (blockedList.get(0).getWait() == 0) {
+					PCB pcb = blockedList.remove(0);
 					pcb.getProcess().setState(State.READY);
 					if (pcb.getCredit() > 0) {
 						addReadyProcess(pcb);
@@ -51,7 +54,7 @@ public class ProcessList {
 						}
 					}
 				} else {
-					blockedList.add(pcb);
+					break;
 				}
 			}
 		}
