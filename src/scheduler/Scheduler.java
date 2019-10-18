@@ -10,6 +10,7 @@ public class Scheduler {
     private Log logger;
     private double changes = 0;
     private double instructionsRan = 0;
+    private double quantunsRan = 0;
 
     public Scheduler() throws IOException {
         logger = Log.getInstance();
@@ -23,6 +24,7 @@ public class Scheduler {
             logger.addMessage("RUNNING_PROCESS", process.getName());
             process.setState(State.RUNNING);
 
+            quantunsRan += processPCB.getProcessQuantum();
             int instructionsToRun = Escalonador.quantum * (roundRobin ? 1 : processPCB.getProcessQuantum());
 
             boolean processEnd = false;
@@ -115,7 +117,7 @@ public class Scheduler {
         }
 
         logger.addMessage("AVERAGE_EXCHANGES", changes / numOfProcess);
-        logger.addMessage("INSTRUCTION_AVERAGE", instructionsRan / changes);
+        logger.addMessage("INSTRUCTION_AVERAGE", instructionsRan / quantunsRan);
         logger.addMessage("QUANTUM", Escalonador.quantum);
     }
 
