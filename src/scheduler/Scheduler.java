@@ -99,7 +99,7 @@ public class Scheduler {
         while (ProcessTable.processTable.size() != 0) {
             if (!ProcessList.readyList.isEmpty()) {
                 if (ProcessList.allProcessInReadyListWithZEROCredit()) {
-                    if (ProcessList.blockedList.isEmpty() && !ProcessList.allProcessInReadyListWithZEROPriority()) {
+                    if (ProcessList.allProcessInBlockedListWithZEROCredit() && !ProcessList.allProcessInReadyListWithZEROPriority()) {
                         ProcessList.resetReadyList();
                     } else {
                         executeProcess(ProcessList.removeNextInReadyList(), true);

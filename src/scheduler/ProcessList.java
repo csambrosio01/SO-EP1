@@ -94,4 +94,11 @@ public class ProcessList {
 		}
 		return true;
 	}
+
+	public static boolean allProcessInBlockedListWithZEROCredit() {
+		for (PCB pcb : blockedList) {
+			if (pcb.getCredit() > 0) return false;
+		}
+		return true;
+	}
 }
