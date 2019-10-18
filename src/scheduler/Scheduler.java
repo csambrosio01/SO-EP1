@@ -100,7 +100,7 @@ public class Scheduler {
             if (!ProcessList.readyList.isEmpty()) {
                 if (ProcessList.allProcessInReadyListWithZEROCredit()) {
                     if (ProcessList.allProcessInBlockedListWithZEROCredit() && !ProcessList.allProcessInReadyListWithZEROPriority()) {
-                        ProcessList.resetReadyList();
+                        ProcessList.resetReadyAndBlockedList();
                     } else {
                         executeProcess(ProcessList.removeNextInReadyList(), true);
                         changes++;
