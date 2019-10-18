@@ -79,6 +79,11 @@ public class ProcessList {
 				}
 			}
 		}
+
+		for (PCB pcb : blockedList) {
+			pcb.equalsCreditWithPriority();
+			pcb.setProcessQuantumTo1();
+		}
 	}
 
 	public static boolean allProcessInReadyListWithZEROCredit() {
