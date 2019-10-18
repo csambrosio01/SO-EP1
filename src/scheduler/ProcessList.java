@@ -74,7 +74,7 @@ public class ProcessList {
 
 		for (int i = readyList.size(); i >= 1; i--) {
 			for (int j = 1; j < i; j++) {
-				if (readyList.get(j - 1).compareTo(readyList.get(j)) < 0) {
+				if (readyList.get(j - 1).compareTo(readyList.get(j)) > 0) {
 					Collections.swap(readyList, j, j-1);
 				}
 			}
