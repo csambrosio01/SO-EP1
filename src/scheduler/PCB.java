@@ -1,6 +1,6 @@
 package scheduler;
 
-public class PCB implements Comparable<PCB>{
+public class PCB {
 	private Process process;
 	private final int priority;
 	private int programCounter;
@@ -97,13 +97,30 @@ public class PCB implements Comparable<PCB>{
 		this.processQuantum = 1;
 	}
 
-	@Override
-	public int compareTo(PCB pcb) {
+	public int compareToForInitialization(PCB pcb) {
+		int condition = commonConditions(pcb);
+		if (condition != 0) return condition;
+		else {
+			if (this.process.getNumber() > pcb.process.getNumber()) return 1;
+			else return -1;
+		}
+	}
+
+	public int compareToForReadyProcess(PCB pcb) {
+		int condition = commonConditions(pcb);
+		return condition != 0 ? condition : -1;
+	}
+
+	public int compareToForBlockedProcess(PCB pcb) {
+		int condition = commonConditions(pcb);
+		return condition != 0 ? condition : 1;
+	}
+
+	private int commonConditions(PCB pcb) {
 		if (this.credit < pcb.credit) return 1;
 		else if (this.credit > pcb.credit) return -1;
 		else if (this.priority < pcb.priority) return 1;
 		else if (this.priority > pcb.priority) return -1;
-		else if (this.process.getNumber() > pcb.process.getNumber()) return 1;
-		else return -1;
+		return 0; //same credit and same priority
 	}
 }
