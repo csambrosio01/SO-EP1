@@ -82,7 +82,7 @@ public class Scheduler {
                         if (ProcessList.shouldContinue(processPCB)) runAgain = true;
                         else {
                             process.setState(State.READY);
-                            ProcessList.addReadyProcess(processPCB);
+                            ProcessList.addReadyProcessDuringExecution(processPCB);
                         }
                     }
                 }
