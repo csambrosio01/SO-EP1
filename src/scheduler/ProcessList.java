@@ -66,7 +66,7 @@ public class ProcessList {
 		} else return true;
 	}
 
-	public static void resetReadyList() {
+	public static void resetReadyAndBlockedList() {
 		for (PCB pcb : readyList) {
 			pcb.equalsCreditWithPriority();
 			pcb.setProcessQuantumTo1();
@@ -78,6 +78,11 @@ public class ProcessList {
 					Collections.swap(readyList, j, j-1);
 				}
 			}
+		}
+
+		for (PCB pcb : blockedList) {
+			pcb.equalsCreditWithPriority();
+			pcb.setProcessQuantumTo1();
 		}
 	}
 
@@ -91,6 +96,13 @@ public class ProcessList {
 	public static boolean allProcessInReadyListWithZEROPriority() {
 		for (PCB pcb : readyList) {
 			if (pcb.getPriority() > 0) return false;
+		}
+		return true;
+	}
+
+	public static boolean allProcessInBlockedListWithZEROCredit() {
+		for (PCB pcb : blockedList) {
+			if (pcb.getCredit() > 0) return false;
 		}
 		return true;
 	}
