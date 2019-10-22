@@ -1,5 +1,7 @@
 package scheduler;
 
+import java.util.Comparator;
+
 public class PCB {
 	private Process process;
 	private final int priority;
@@ -101,8 +103,13 @@ public class PCB {
 		int condition = commonConditions(pcb);
 		if (condition != 0) return condition;
 		else {
-			if (this.process.getNumber() > pcb.process.getNumber()) return 1;
-			else return -1;
+			Comparator comparator = Comparator.comparing(PCB::removeNumbers).thenComparing(PCB::keepNumbers);
+			int result = comparator.compare(this.process.getName(), pcb.process.getName());
+			if (result < 0) {
+				return -1;
+			} else if (result > 0) {
+				return 1;
+			} else return result;
 		}
 	}
 
@@ -122,5 +129,17 @@ public class PCB {
 		else if (this.priority < pcb.priority) return 1;
 		else if (this.priority > pcb.priority) return -1;
 		return 0; //same credit and same priority
+	}
+
+	private static String removeNumbers(String s) {
+		return s.replaceAll("\\d", "");
+	}
+
+	private static Integer keepNumbers(String s) {
+		String number = s.replaceAll("\\D", "");
+		if (!number.isEmpty()) {
+			return Integer.parseInt(number);
+		}
+		return 0;
 	}
 }
