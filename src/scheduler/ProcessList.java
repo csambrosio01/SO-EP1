@@ -11,10 +11,24 @@ public class ProcessList {
 	public static List<PCB> blockedList = new ArrayList<PCB>();
 	
 
-	public static void addReadyProcess(PCB pcb) {
+	public static void addReadyProcessOnInitialization(PCB pcb) {
 		readyList.add(pcb);
 
-		for (int i = readyList.size()-1; i > 0 && pcb.compareTo(readyList.get(i-1)) < 0; i--) 
+		for (int i = readyList.size()-1; i > 0 && pcb.compareToForInitialization(readyList.get(i-1)) < 0; i--)
+			Collections.swap(readyList, i, i-1);
+	}
+
+	public static void addReadyProcessDuringExecution(PCB pcb) {
+		readyList.add(pcb);
+
+		for (int i = readyList.size()-1; i > 0 && pcb.compareToForReadyProcess(readyList.get(i-1)) < 0; i--)
+			Collections.swap(readyList, i, i-1);
+	}
+
+	public static void addBlockedProcessDuringExecution(PCB pcb) {
+		readyList.add(pcb);
+
+		for (int i = readyList.size()-1; i > 0 && pcb.compareToForBlockedProcess(readyList.get(i-1)) < 0; i--)
 			Collections.swap(readyList, i, i-1);
 	}
 
@@ -45,12 +59,12 @@ public class ProcessList {
 					PCB pcb = blockedList.remove(0);
 					pcb.getProcess().setState(State.READY);
 					if (pcb.getCredit() > 0) {
-						addReadyProcess(pcb);
+						addBlockedProcessDuringExecution(pcb);
 					} else {
 						if (allProcessInReadyListWithZEROCredit()) {
 							addReadyProcessInLastPosition(pcb);
 						} else {
-							addReadyProcess(pcb);
+							addBlockedProcessDuringExecution(pcb);
 						}
 					}
 				} else {
@@ -62,7 +76,7 @@ public class ProcessList {
 
 	public static boolean shouldContinue(PCB pcb) {
 		if (readyList.size() > 0) {
-			return pcb.compareTo(readyList.get(0)) < 0;
+			return pcb.compareToForReadyProcess(readyList.get(0)) < 0;
 		} else return true;
 	}
 
@@ -74,7 +88,7 @@ public class ProcessList {
 
 		for (int i = readyList.size(); i >= 1; i--) {
 			for (int j = 1; j < i; j++) {
-				if (readyList.get(j - 1).compareTo(readyList.get(j)) > 0) {
+				if (readyList.get(j - 1).compareToForInitialization(readyList.get(j)) > 0) {
 					Collections.swap(readyList, j, j-1);
 				}
 			}

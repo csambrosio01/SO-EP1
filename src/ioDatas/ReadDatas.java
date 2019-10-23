@@ -25,7 +25,7 @@ public class ReadDatas {
         for (int i = 1; i <= priorities.size(); i++) {
             PCB processPCB = readFile(i, priorities.get(i - 1));
             ProcessTable.addPCBonProcessTable(processPCB);
-            ProcessList.addReadyProcess(processPCB);
+            ProcessList.addReadyProcessOnInitialization(processPCB);
         }
         logProcessName();
     }
