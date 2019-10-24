@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class ReadDatas {
 
-    private String processDirectoryPath = "src/processos/";
+    private String processDirectoryPath = "processos/";
 
     public int readQuantum() throws IOException {
         Scanner scanner = new Scanner(new File(processDirectoryPath + "quantum.txt"));
