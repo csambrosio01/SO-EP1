@@ -25,7 +25,7 @@ public class ReadDatas {
         for (int i = 1; i <= priorities.size(); i++) {
             PCB processPCB = readFile(i, priorities.get(i - 1));
             ProcessTable.addPCBonProcessTable(processPCB);
-            ProcessList.addReadyProcess(processPCB);
+            ProcessList.addReadyProcessOnInitialization(processPCB);
         }
         logProcessName();
     }
@@ -53,9 +53,13 @@ public class ReadDatas {
 
         String fileName = scanner.nextLine();
 
-        while (scanner.hasNextLine()) {
+        while (scanner.hasNextLine() && instructions.size() < 49) {
             String content = scanner.nextLine();
             instructions.add(content);
+        }
+
+        if (instructions.size() == 49) {
+            instructions.add("SAIDA");
         }
 
         Process process = new Process(fileName, instructions.toArray(new String[0]), State.READY, processNumber);
