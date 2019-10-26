@@ -3,13 +3,10 @@ package scheduler;
 public class Process {
 	private final String [] instructions;
 	private String name;
-	private int number;
-
 	
-	public Process(String name, String[] instructions, int number) {
+	public Process(String name, String[] instructions) {
 		this.name = name;
 		this.instructions = instructions;
-		this.number = number;
 	}
 	
 	public String getInstruction(int index) {
@@ -36,9 +33,5 @@ public class Process {
 	
 	public String getName() {
 		return this.name;
-	}
-
-	public int getNumber() {
-		return this.number;
 	}
 }

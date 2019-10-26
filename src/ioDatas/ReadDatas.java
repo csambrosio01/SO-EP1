@@ -62,7 +62,7 @@ public class ReadDatas {
             instructions.add("SAIDA");
         }
 
-        Process process = new Process(fileName, instructions.toArray(new String[0]), processNumber);
+        Process process = new Process(fileName, instructions.toArray(new String[0]));
 
         scanner.close();
         return new PCB(process, processPriority, State.READY);
