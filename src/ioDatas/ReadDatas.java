@@ -13,6 +13,11 @@ public class ReadDatas {
 
     private String processDirectoryPath = "src/processos/";
 
+    /**
+     * Read quantum of quantum.txt
+     * @return quantum value
+     * @throws IOException
+     */
     public int readQuantum() throws IOException {
         Scanner scanner = new Scanner(new File(processDirectoryPath + "quantum.txt"));
         int quantum = scanner.nextInt();
@@ -20,6 +25,10 @@ public class ReadDatas {
         return quantum;
     }
 
+    /**
+     * Ready process files and save in ProcessList and ProcessTable
+     * @throws IOException
+     */
     public void readProcessFiles() throws IOException {
         List<Integer> priorities = readPriorities();
         for (int i = 1; i <= priorities.size(); i++) {
@@ -30,6 +39,11 @@ public class ReadDatas {
         logProcessName();
     }
 
+    /**
+     * Read priorities of process
+     * @return a list of priorities
+     * @throws IOException
+     */
     private List<Integer> readPriorities() throws IOException {
         List<Integer> priorities = new ArrayList<>();
 
@@ -45,6 +59,13 @@ public class ReadDatas {
         return priorities;
     }
 
+    /**
+     * Read a process file e create a PCB
+     * @param processNumber is a number of process
+     * @param processPriority is a process priority
+     * @return a pcb
+     * @throws IOException
+     */
     private PCB readFile(int processNumber, int processPriority) throws IOException {
         String processPath = processDirectoryPath + (processNumber < 10 ? "0" + processNumber : processNumber) + ".txt";
         Scanner scanner = new Scanner(new File(processPath));
@@ -58,6 +79,7 @@ public class ReadDatas {
             instructions.add(content);
         }
 
+        // Max lines is 50, so the last line must be SAIDA
         if (instructions.size() == 49) {
             instructions.add("SAIDA");
         }
@@ -68,6 +90,10 @@ public class ReadDatas {
         return new PCB(process, processPriority, State.READY);
     }
 
+    /**
+     * Write to logFile the loading process
+     * @throws IOException
+     */
     private void logProcessName() throws IOException {
         Log logger = Log.getInstance();
         for (PCB pcb : ProcessList.readyList) {
