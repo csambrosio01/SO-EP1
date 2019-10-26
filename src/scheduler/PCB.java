@@ -106,6 +106,13 @@ public class PCB {
 		this.processQuantum = 1;
 	}
 
+    /**
+     * compareTo for initialization
+     * @param pcb is a pcb
+     * @return -1 if this process needs to go in front of the pcb
+     *          0 if processes have the same credit and same priority
+     *          1 if this process needs to go after the pcb
+     */
 	public int compareToForInitialization(PCB pcb) {
 		int condition = commonConditions(pcb);
 		if (condition != 0) return condition;
@@ -120,16 +127,35 @@ public class PCB {
 		}
 	}
 
+    /**
+     * compareTo between ready process
+     * @param pcb is a pcb
+     * @return -1 if this process needs to go in front of the pcb
+     *          1 if this process needs to go after the pcb
+     */
 	public int compareToForReadyProcess(PCB pcb) {
 		int condition = commonConditions(pcb);
 		return condition != 0 ? condition : -1;
 	}
 
+    /**
+     * compareTo between a ready process and a process that was blocked
+     * @param pcb is a pcb
+     * @return -1 if this process needs to go in front of the pcb
+     *          1 if this process needs to go after the pcb
+     */
 	public int compareToForBlockedProcess(PCB pcb) {
 		int condition = commonConditions(pcb);
 		return condition != 0 ? condition : 1;
 	}
 
+    /**
+     * Checks whether processes are tied or not
+     * @param pcb is a pcb
+     * @return -1 if this process needs to go in front of the pcb
+     *          0 if processes have the same credit and same priority
+     *          1 if this process needs to go after the pcb
+     */
 	private int commonConditions(PCB pcb) {
 		if (this.credit < pcb.credit) return 1;
 		else if (this.credit > pcb.credit) return -1;
@@ -138,10 +164,12 @@ public class PCB {
 		return 0; //same credit and same priority
 	}
 
+	// Method for sort process names
 	private static String removeNumbers(String s) {
 		return s.replaceAll("\\d", "");
 	}
 
+    // Method for sort process names
 	private static Integer keepNumbers(String s) {
 		String number = s.replaceAll("\\D", "");
 		if (!number.isEmpty()) {
