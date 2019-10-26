@@ -22,7 +22,7 @@ public class Scheduler {
             runAgain = false;
             Process process = processPCB.getProcess();
             logger.addMessage("RUNNING_PROCESS", process.getName());
-            process.setState(State.RUNNING);
+            processPCB.setState(State.RUNNING);
 
             quantunsRan += processPCB.getProcessQuantum();
             int instructionsToRun = Escalonador.quantum * (roundRobin ? 1 : processPCB.getProcessQuantum());
@@ -68,27 +68,27 @@ public class Scheduler {
 
             if (!processEnd) {
                 if (processIO) {
-                    process.setState(State.BLOCKED);
+                    processPCB.setState(State.BLOCKED);
                     processPCB.setWaitTo2();
                     ProcessList.decreaseBlockedListWait();
                     ProcessList.addBlockedProcess(processPCB);
                 } else {
                     if (roundRobin) {
-                        process.setState(State.READY);
+                        processPCB.setState(State.READY);
                         ProcessList.addReadyProcessInLastPosition(processPCB);
                         ProcessList.decreaseBlockedListWait();
                     } else {
                         ProcessList.decreaseBlockedListWait();
                         if (ProcessList.shouldContinue(processPCB)) runAgain = true;
                         else {
-                            process.setState(State.READY);
+                            processPCB.setState(State.READY);
                             ProcessList.addReadyProcessDuringExecution(processPCB);
                         }
                     }
                 }
             } else {
                 logger.addMessage("ENDING_PROCESS", process.getName(), processPCB.getRegisterX(), processPCB.getRegisterY());
-                process.setState(State.FINISHED);
+                processPCB.setState(State.FINISHED);
                 ProcessTable.removePCBofProcessTable(processPCB);
                 ProcessList.decreaseBlockedListWait();
             }

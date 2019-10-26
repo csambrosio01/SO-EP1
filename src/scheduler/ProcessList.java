@@ -57,7 +57,7 @@ public class ProcessList {
 			for (int i = 0; i < blockedListSize; i++) {
 				if (blockedList.get(0).getWait() == 0) {
 					PCB pcb = blockedList.remove(0);
-					pcb.getProcess().setState(State.READY);
+					pcb.setState(State.READY);
 					if (pcb.getCredit() > 0) {
 						addBlockedProcessDuringExecution(pcb);
 					} else {

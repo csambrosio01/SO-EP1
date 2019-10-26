@@ -62,10 +62,10 @@ public class ReadDatas {
             instructions.add("SAIDA");
         }
 
-        Process process = new Process(fileName, instructions.toArray(new String[0]), State.READY, processNumber);
+        Process process = new Process(fileName, instructions.toArray(new String[0]), processNumber);
 
         scanner.close();
-        return new PCB(process, processPriority);
+        return new PCB(process, processPriority, State.READY);
     }
 
     private void logProcessName() throws IOException {

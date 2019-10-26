@@ -4,6 +4,7 @@ import java.util.Comparator;
 
 public class PCB {
 	private Process process;
+	private State state;
 	private final int priority;
 	private int programCounter;
 	private int registerX;
@@ -13,8 +14,9 @@ public class PCB {
 	private int processQuantum;
 	
 
-	public PCB(Process process, int priority) {
+	public PCB(Process process, int priority, State state) {
 		this.process = process;
+        this.state = state;
 		this.programCounter = 0;
 		this.priority = priority;
 		this.credit = priority;
@@ -27,6 +29,11 @@ public class PCB {
 	// Process methods
 	public Process getProcess() {
 		return this.process;
+	}
+
+	// State methods
+	public void setState(State state) {
+		this.state = state;
 	}
 
 	// Priority methods

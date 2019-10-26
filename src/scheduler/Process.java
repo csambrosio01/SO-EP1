@@ -1,15 +1,13 @@
 package scheduler;
 
 public class Process {
-	private final String [] instructions; 
-	private State state;
+	private final String [] instructions;
 	private String name;
 	private int number;
 
 	
-	public Process(String name, String[] instructions, State state, int number) {
+	public Process(String name, String[] instructions, int number) {
 		this.name = name;
-		this.setState(state);
 		this.instructions = instructions;
 		this.number = number;
 	}
@@ -34,10 +32,6 @@ public class Process {
 				else 
 					return Instruction.ATTRIBUTIONY;
 		}
-	}
-
-	public void setState(State state) {
-		this.state = state;
 	}
 	
 	public String getName() {
