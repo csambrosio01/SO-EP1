@@ -9,8 +9,11 @@ public class ProcessList {
 	public static List<PCB> readyList = new ArrayList<PCB>();
 	// The blockedList keeps the data in order of entry
 	public static List<PCB> blockedList = new ArrayList<PCB>();
-	
 
+	/**
+	 * Add ready process on initialization
+	 * @param pcb is a pcb
+	 */
 	public static void addReadyProcessOnInitialization(PCB pcb) {
 		readyList.add(pcb);
 
@@ -18,6 +21,10 @@ public class ProcessList {
 			Collections.swap(readyList, i, i-1);
 	}
 
+	/**
+	 * Add a process that was already ready to the readyList
+	 * @param pcb is a pcb
+	 */
 	public static void addReadyProcessDuringExecution(PCB pcb) {
 		readyList.add(pcb);
 
@@ -25,6 +32,10 @@ public class ProcessList {
 			Collections.swap(readyList, i, i-1);
 	}
 
+	/**
+	 * Add a process that was blocked to the readyList
+	 * @param pcb is a pcb
+	 */
 	public static void addBlockedProcessDuringExecution(PCB pcb) {
 		readyList.add(pcb);
 
@@ -32,14 +43,26 @@ public class ProcessList {
 			Collections.swap(readyList, i, i-1);
 	}
 
+	/**
+	 * Add ready process in last position of readyList (in case round robin)
+	 * @param pcb is a pcb
+	 */
 	public static void addReadyProcessInLastPosition(PCB pcb) {
 		readyList.add(pcb);
 	}
-	
+
+	/**
+	 * Add blocked process in last position of blockedList
+	 * @param pcb
+	 */
 	public static void addBlockedProcess(PCB pcb) {
 		blockedList.add(pcb);
 	}
-	
+
+	/**
+	 * Remove next process in readyList
+	 * @return pcb
+	 */
 	public static PCB removeNextInReadyList() {
 		if (readyList.size() > 0) {
 			return readyList.remove(0); // PCB with more priority
@@ -48,6 +71,9 @@ public class ProcessList {
 		}
 	}
 
+	/**
+	 * Decrease wait of blocked process
+	 */
 	public static void decreaseBlockedListWait() {
 		if (blockedList.size() > 0) {
 			for (PCB pcb : blockedList) {
@@ -74,18 +100,28 @@ public class ProcessList {
 		}
 	}
 
+	/**
+	 * Checks whether a process should continue to run or not
+	 * @param pcb is a pcb
+	 * @return true if should continue or false if it should not continue
+	 */
 	public static boolean shouldContinue(PCB pcb) {
 		if (readyList.size() > 0) {
 			return pcb.compareToForReadyProcess(readyList.get(0)) < 0;
 		} else return true;
 	}
 
+	/**
+	 * Redistributes credits
+	 */
 	public static void resetReadyAndBlockedList() {
+		// Reset credits of readyList
 		for (PCB pcb : readyList) {
 			pcb.equalsCreditWithPriority();
 			pcb.setProcessQuantumTo1();
 		}
 
+		// Sorts the readyList
 		for (int i = readyList.size(); i >= 1; i--) {
 			for (int j = 1; j < i; j++) {
 				if (readyList.get(j - 1).compareToForInitialization(readyList.get(j)) > 0) {
@@ -94,12 +130,17 @@ public class ProcessList {
 			}
 		}
 
+		// Reset credits of blockedList
 		for (PCB pcb : blockedList) {
 			pcb.equalsCreditWithPriority();
 			pcb.setProcessQuantumTo1();
 		}
 	}
 
+	/**
+	 * Checks if all processes in readyList are zero credit
+	 * @return true if yes or false if no
+	 */
 	public static boolean allProcessInReadyListWithZEROCredit() {
 		for (PCB pcb : readyList) {
 			if (pcb.getCredit() > 0) return false;
@@ -107,6 +148,10 @@ public class ProcessList {
 		return true;
 	}
 
+	/**
+	 * Checks if all processes in readyList are zero priority
+	 * @return true if yes or false if no
+	 */
 	public static boolean allProcessInReadyListWithZEROPriority() {
 		for (PCB pcb : readyList) {
 			if (pcb.getPriority() > 0) return false;
@@ -114,6 +159,10 @@ public class ProcessList {
 		return true;
 	}
 
+	/**
+	 * Checks if all processes in blockedList are zero credit
+	 * @return true if yes or false if no
+	 */
 	public static boolean allProcessInBlockedListWithZEROCredit() {
 		for (PCB pcb : blockedList) {
 			if (pcb.getCredit() > 0) return false;
