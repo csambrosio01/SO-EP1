@@ -37,7 +37,7 @@ public class Scheduler {
             quantunsRan += processPCB.getProcessQuantum();
 
             /**
-             * If it is running round robin, each process executes quantum instruction,
+             * If it is running round robin, each process executes quantum instructions,
              * else executes quantum x processQuantum instructions
              */
             int instructionsToRun = Escalonador.quantum * (roundRobin ? 1 : processPCB.getProcessQuantum());
