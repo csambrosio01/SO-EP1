@@ -12,12 +12,16 @@ public class Escalonador {
 
 	public static void main(String[] args) throws IOException {
 		ReadDatas readDatas = new ReadDatas();
+
+		// Read quantum from quantum.txt file
 		quantum = readDatas.readQuantum();
 
 		Log logger = Log.getInstance();
 
+		// Ready priorities and process files from its files
 		readDatas.readProcessFiles();
 
+		// Execute scheduler
 		Scheduler scheduler = new Scheduler();
 		scheduler.run();
 

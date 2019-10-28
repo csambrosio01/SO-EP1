@@ -1,23 +1,32 @@
 package scheduler;
 
 public class Process {
-	private final String [] instructions; 
-	private State state;
+	private final String [] instructions;
 	private String name;
-	private int number;
 
-	
-	public Process(String name, String[] instructions, State state, int number) {
+	/**
+	 * Constructor of class Process
+	 * @param name is the process name
+	 * @param instructions is an array of instructions
+	 */
+	public Process(String name, String[] instructions) {
 		this.name = name;
-		this.setState(state);
 		this.instructions = instructions;
-		this.number = number;
 	}
-	
+
+	/**
+	 * @param index is index of instruction that should be get
+	 * @return the instruction
+	 */
 	public String getInstruction(int index) {
 		return this.instructions[index];
 	}
-	
+
+	/**
+	 * Get type of instruction
+	 * @param index is index of instruction that should be used
+	 * @return the type of instruction localized on position that index represents
+	 */
 	public Instruction getTypeOfInstruction(int index) {
 		String instruction = getInstruction(index).toUpperCase();
 		
@@ -36,15 +45,7 @@ public class Process {
 		}
 	}
 
-	public void setState(State state) {
-		this.state = state;
-	}
-	
 	public String getName() {
 		return this.name;
-	}
-
-	public int getNumber() {
-		return this.number;
 	}
 }
