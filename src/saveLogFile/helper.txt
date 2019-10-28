@@ -1,1 +1,0 @@
-File created just to upload the saveLogFile directory. Delete this file when submitting project.
