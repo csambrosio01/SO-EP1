@@ -60,7 +60,7 @@ public class ReadDatas {
     }
 
     /**
-     * Read a process file e create a PCB
+     * Read a process file and create a PCB
      * @param processNumber is a number of process
      * @param processPriority is a process priority
      * @return a pcb
@@ -79,7 +79,7 @@ public class ReadDatas {
             instructions.add(content);
         }
 
-        // Max lines is 50, so the last line must be SAIDA
+        // Max lines is 50, so the last line must be equals SAIDA
         if (instructions.size() == 49) {
             instructions.add("SAIDA");
         }
@@ -91,7 +91,7 @@ public class ReadDatas {
     }
 
     /**
-     * Write to logFile the loading process
+     * Write the load messages to the log file
      * @throws IOException
      */
     private void logProcessName() throws IOException {
