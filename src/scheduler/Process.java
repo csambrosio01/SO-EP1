@@ -7,7 +7,7 @@ public class Process {
 	/**
 	 * Constructor of Process class
 	 * @param name is the process name
-	 * @param instructions a instruction array
+	 * @param instructions is a instruction array
 	 */
 	public Process(String name, String[] instructions) {
 		this.name = name;
@@ -25,7 +25,7 @@ public class Process {
 	/**
 	 * Get type of instruction
 	 * @param index is a index of instruction
-	 * @return the type os instruction
+	 * @return the type of instruction
 	 */
 	public Instruction getTypeOfInstruction(int index) {
 		String instruction = getInstruction(index).toUpperCase();
