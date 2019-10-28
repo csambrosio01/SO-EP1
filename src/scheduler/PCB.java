@@ -115,7 +115,7 @@ public class PCB {
 		if (condition != 0) return condition;
 		else {
 			// Create new comparator to be used, it considers process name as comparator method
-			Comparator comparator = Comparator.comparing(PCB::removeNumbers).thenComparing(PCB::keepNumbers);
+			Comparator<String> comparator = Comparator.comparing(PCB::removeNumbers).thenComparing(PCB::keepNumbers);
 			int result = comparator.compare(this.process.getName(), pcb.process.getName());
 			if (result < 0) {
 				return -1;
