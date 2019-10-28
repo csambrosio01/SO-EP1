@@ -11,7 +11,7 @@ public class ProcessList {
 	public static List<PCB> blockedList = new ArrayList<PCB>();
 
 	/**
-	 * Add ready process on initialization
+	 * Add ready process to readyList at program start
 	 * @param pcb is a pcb
 	 */
 	public static void addReadyProcessOnInitialization(PCB pcb) {
