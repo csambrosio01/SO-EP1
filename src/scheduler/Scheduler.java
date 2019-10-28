@@ -13,7 +13,7 @@ public class Scheduler {
     private double quantunsRan = 0;
 
     /**
-     * Constructor of Scheduler class
+     * Constructor of class Scheduler
      * @throws IOException
      */
     public Scheduler() throws IOException {
@@ -21,10 +21,10 @@ public class Scheduler {
     }
 
     /**
-     * Execute the process using priority or round robin
-     * @param processPCB is the PCB
-     * @param roundRobin is true if it is need to run round robin,
-     *                   or is false if it is need to run using priority
+     * Execute process instructions
+     * @param processPCB is process PCB
+     * @param roundRobin is true if scheduler is configured to run in round robin mode,
+     *                   is false when execution is normal
      */
     private void executeProcess(PCB processPCB, boolean roundRobin) {
         boolean runAgain;
@@ -36,12 +36,13 @@ public class Scheduler {
 
             quantunsRan += processPCB.getProcessQuantum();
 
-            /**
-             * If it is running round robin, each process executes quantum instructions,
-             * else executes quantum x processQuantum instructions
+            /*
+              When running in round robin mode, each process will execute 1 quantum,
+              otherwise it executes how many quantums process has on that moment
              */
             int instructionsToRun = Escalonador.quantum * (roundRobin ? 1 : processPCB.getProcessQuantum());
 
+            // Initialize variables that control end of process execution and IO instruction called
             boolean processEnd = false;
             boolean processIO = false;
             int i;
@@ -52,28 +53,29 @@ public class Scheduler {
                 processPCB.increaseProgramCounter();
                 switch (instruction) { // Check instruction type and execute as needed
                     case ATTRIBUTIONX:
-                        // Modify registerX with its value
+                        // Set register X with new value
                         String xAttribute = instructionExecutor.split("=")[1];
                         processPCB.setRegisterX(Integer.parseInt(xAttribute));
                         break;
                     case ATTRIBUTIONY:
-                        // Modify registerY with its value
+                        // Set register Y with new value
                         String yAttribute = instructionExecutor.split("=")[1];
                         processPCB.setRegisterY(Integer.parseInt(yAttribute));
                         break;
                     case INTERRUPTION:
-                        // Sets the processIO variable equal to true, which means the process must be locked
+                        // Log a message saying that an IO instructions was called on process
                         logger.addMessage("IO_STARTED", process.getName());
+                        // Set processIO variable to true, saying that an IO instruction was called
                         processIO = true;
                         i++;
                         break loop;
                     case END:
-                        // Sets the processEnd variable equal to true, which means the process must be ended
+                        // Set processEnd variable to true, which means process has finished execution
                         processEnd = true;
                         i++;
                         break loop;
                     default:
-                        // In case the instruction is a command
+                        // If instruction is COM, does nothing
                         break;
                 }
             }
@@ -82,40 +84,41 @@ public class Scheduler {
 
             logger.addMessage(i == 1 ? "INTERRUPTING_PROCESS_1" : "INTERRUPTING_PROCESS_2", process.getName(), i);
 
-            // If process is executing using priority
+            // If process execution mode is not round robin
             if (!roundRobin) {
                 processPCB.increaseProcessQuantum();
                 processPCB.decreaseTwoCredits();
             }
 
+            // If process did not finish
             if (!processEnd) {
+                // If IO instruction is called
                 if (processIO) {
-                    // If process does not end and is blocked
                     processPCB.setState(State.BLOCKED);
                     processPCB.setWaitTo2();
                     ProcessList.decreaseBlockedListWait();
                     ProcessList.addBlockedProcess(processPCB);
                 } else {
+                    // If process execution mode is round robin, add process to end of readyList
                     if (roundRobin) {
-                        // If process does not end and is executing round robin
                         processPCB.setState(State.READY);
                         ProcessList.addReadyProcessInLastPosition(processPCB);
                         ProcessList.decreaseBlockedListWait();
                     } else {
-                        // If process does not end and is executing using priority
+                        // If process execution is normal execution
                         ProcessList.decreaseBlockedListWait();
+                        // Verify if process continues to be highest credit on ready list, if it is continues execution
                         if (ProcessList.shouldContinue(processPCB)) {
-                            // Execute again
                             runAgain = true;
                         } else {
-                            // Enter in the ready list in their respective position
+                            // Add process to correct position on ready list
                             processPCB.setState(State.READY);
                             ProcessList.addReadyProcessDuringExecution(processPCB);
                         }
                     }
                 }
             } else {
-                // If process end
+                // If process finished, log message and remove it from process table.
                 logger.addMessage("ENDING_PROCESS", process.getName(), processPCB.getRegisterX(), processPCB.getRegisterY());
                 processPCB.setState(State.FINISHED);
                 ProcessTable.removePCBofProcessTable(processPCB);
@@ -125,12 +128,12 @@ public class Scheduler {
     }
 
     /**
-     * Manages all scheduler execution
+     * Manages scheduler execution
      */
     public void run() {
         int numOfProcess = ProcessTable.processTable.size();
 
-        // While the processTable contains some process
+        // Run while process table has any process
         while (ProcessTable.processTable.size() != 0) {
             // If readyList is not empty
             if (!ProcessList.readyList.isEmpty()) {
@@ -140,14 +143,14 @@ public class Scheduler {
                     if (ProcessList.allProcessInBlockedListWithZEROCredit() && !ProcessList.allProcessInReadyListWithZEROPriority()) {
                         ProcessList.resetReadyAndBlockedList(); // Reset readyList and blockedList
                     } else {
-                        // Execute round robin
+                        // Execute process in round robin mode
                         executeProcess(ProcessList.removeNextInReadyList(), true);
                         changes++;
                     }
                 }
-                //If at least one process in readyList is not zero credit
+                // If at least one process in readyList is not zero credit
                 else {
-                    // Execute using priority
+                    // Execute process normally
                     executeProcess(ProcessList.removeNextInReadyList(), false);
                     changes++;
                 }

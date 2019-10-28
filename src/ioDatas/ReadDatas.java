@@ -26,7 +26,7 @@ public class ReadDatas {
     }
 
     /**
-     * Ready process files and save in ProcessList and ProcessTable
+     * Read each process from its file and save it to ProcessList.readyList and ProcessTable.processTable
      * @throws IOException
      */
     public void readProcessFiles() throws IOException {
@@ -40,7 +40,7 @@ public class ReadDatas {
     }
 
     /**
-     * Read priorities of process
+     * Read each process priority
      * @return a list of priorities
      * @throws IOException
      */
@@ -60,10 +60,10 @@ public class ReadDatas {
     }
 
     /**
-     * Read a process file and create a PCB
-     * @param processNumber is a number of process
-     * @param processPriority is a process priority
-     * @return a pcb
+     * Read a process file and create its PCB
+     * @param processNumber number of process that will be read
+     * @param processPriority priority of process that will be red
+     * @return PCB with all process information
      * @throws IOException
      */
     private PCB readFile(int processNumber, int processPriority) throws IOException {
@@ -91,7 +91,7 @@ public class ReadDatas {
     }
 
     /**
-     * Write the load messages to the log file
+     * Write message 'LOADING_PROCESS' for each process in ready list to log file
      * @throws IOException
      */
     private void logProcessName() throws IOException {

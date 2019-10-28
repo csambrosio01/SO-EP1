@@ -5,9 +5,9 @@ public class Process {
 	private String name;
 
 	/**
-	 * Constructor of Process class
+	 * Constructor of class Process
 	 * @param name is the process name
-	 * @param instructions is a instruction array
+	 * @param instructions is an array of instructions
 	 */
 	public Process(String name, String[] instructions) {
 		this.name = name;
@@ -15,7 +15,7 @@ public class Process {
 	}
 
 	/**
-	 * @param index is a index of instruction
+	 * @param index is index of instruction that should be get
 	 * @return the instruction
 	 */
 	public String getInstruction(int index) {
@@ -24,8 +24,8 @@ public class Process {
 
 	/**
 	 * Get type of instruction
-	 * @param index is a index of instruction
-	 * @return the type of instruction
+	 * @param index is index of instruction that should be used
+	 * @return the type of instruction localized on position that index represents
 	 */
 	public Instruction getTypeOfInstruction(int index) {
 		String instruction = getInstruction(index).toUpperCase();
@@ -45,9 +45,6 @@ public class Process {
 		}
 	}
 
-	/**
-	 * @return process name
-	 */
 	public String getName() {
 		return this.name;
 	}

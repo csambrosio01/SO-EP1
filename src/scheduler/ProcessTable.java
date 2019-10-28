@@ -12,7 +12,7 @@ public class ProcessTable {
 		processTable.add(pcb);
 	}
 
-	// Remove PCB of processTable
+	// Remove PCB from processTable
 	public static void removePCBofProcessTable(PCB pcb) {
 		processTable.remove(pcb);
 	}

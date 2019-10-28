@@ -26,17 +26,14 @@ public class PCB {
 		this.processQuantum = 1;
 	}
 	
-	// Process methods
 	public Process getProcess() {
 		return this.process;
 	}
 
-	// State methods
 	public void setState(State state) {
 		this.state = state;
 	}
 
-	// Priority methods
 	public int getPriority() {
 		return this.priority;
 	}
@@ -107,16 +104,17 @@ public class PCB {
 	}
 
     /**
-     * compareTo for initialization
-     * @param pcb is a pcb
-     * @return -1 if this process needs to go in front of the pcb
-     *          0 if processes have the same credit and same priority
-     *          1 if this process needs to go after the pcb
+     * compareTo used on initialization. If both pcb has same credit and priority, use process name as comparator
+     * @param pcb pcb that will be compared
+     * @return -1 if this pcb should go in front of pcb used on comparison
+     *          0 if both pcb have same conditions for each condition used on comparison
+     *          1 if this process should go after pcb used on comparison
      */
 	public int compareToForInitialization(PCB pcb) {
 		int condition = commonConditions(pcb);
 		if (condition != 0) return condition;
 		else {
+			// Create new comparator to be used, it considers process name as comparator method
 			Comparator comparator = Comparator.comparing(PCB::removeNumbers).thenComparing(PCB::keepNumbers);
 			int result = comparator.compare(this.process.getName(), pcb.process.getName());
 			if (result < 0) {
@@ -128,10 +126,10 @@ public class PCB {
 	}
 
     /**
-     * compareTo between ready process
-     * @param pcb is a pcb
-     * @return -1 if this process needs to go in front of the pcb
-     *          1 if this process needs to go after the pcb
+     * compareTo used to define correct position in ready list
+     * @param pcb pcb that will be compared
+     * @return -1 if this pcb should go in front of the pcb used on comparison
+     *          1 if this process should go after pcb used on comparison
      */
 	public int compareToForReadyProcess(PCB pcb) {
 		int condition = commonConditions(pcb);
@@ -139,10 +137,10 @@ public class PCB {
 	}
 
     /**
-     * compareTo between a ready process and a process that was blocked
-     * @param pcb is a pcb
-     * @return -1 if this process needs to go in front of the pcb
-     *          1 if this process needs to go after the pcb
+     * compareTo used to define correct position when a pcb is coming from blocked list
+     * @param pcb pcb that will be compared, came from blocked list
+     * @return -1 if this pcb should go in front of the pcb used on comparison
+	 *      	1 if this process should go after pcb used on comparison
      */
 	public int compareToForBlockedProcess(PCB pcb) {
 		int condition = commonConditions(pcb);
@@ -151,25 +149,23 @@ public class PCB {
 
     /**
      * Checks whether processes are tied or not
-     * @param pcb is a pcb
-     * @return -1 if this process needs to go in front of the pcb
-     *          0 if processes have the same credit and same priority
-     *          1 if this process needs to go after the pcb
+     * @param pcb pcb used on comparison
+     * @return -1 if this pcb should go in front of pcb used on comparison
+	 *          0 if both pcb have same conditions for each condition used on comparison
+	 *	        1 if this process should go after pcb used on comparison
      */
 	private int commonConditions(PCB pcb) {
 		if (this.credit < pcb.credit) return 1;
 		else if (this.credit > pcb.credit) return -1;
 		else if (this.priority < pcb.priority) return 1;
 		else if (this.priority > pcb.priority) return -1;
-		return 0; //same credit and same priority
+		return 0; // both pcb has same credit and same priority
 	}
 
-	// Method for sort process names
 	private static String removeNumbers(String s) {
 		return s.replaceAll("\\d", "");
 	}
 
-    // Method for sort process names
 	private static Integer keepNumbers(String s) {
 		String number = s.replaceAll("\\D", "");
 		if (!number.isEmpty()) {

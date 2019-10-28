@@ -17,7 +17,7 @@ public class Log {
 	private MessageFormat formatter;
 
 	/**
-	 * Constructor of Log
+	 * Constructor of class Log
 	 * @throws IOException
 	 */
 	private Log() throws IOException {
@@ -33,8 +33,8 @@ public class Log {
 	}
 
 	/**
-	 * Get a instance of logFile (it is Singleton)
-	 * @return a logFile instance
+	 * Get an instance of class Log, since it is singleton
+	 * @return a Log instance
 	 * @throws IOException
 	 */
 	public static Log getInstance () throws IOException {
@@ -44,9 +44,9 @@ public class Log {
 	}
 
 	/**
-	 * Add messages in logFile
-	 * @param message is a model of message
-	 * @param args are the arguments of message
+	 * Add a message to logFile
+	 * @param message name of the message in Resource Bundle messages
+	 * @param args arguments of message, could be empty
 	 */
 	public void addMessage(String message, Object... args) {
 		formatter.applyPattern(bundle.getString(message));
