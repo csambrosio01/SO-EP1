@@ -33,7 +33,7 @@ public class Log {
 	}
 
 	/**
-	 * Get a instance of logFile (is Singleton)
+	 * Get a instance of logFile (it is Singleton)
 	 * @return a logFile instance
 	 * @throws IOException
 	 */
